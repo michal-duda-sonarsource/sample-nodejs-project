@@ -9,6 +9,7 @@ definitions:
   steps:
     - step: &build-test-sonarqube
         name: Build, test and analyze on SonarQube
+        max-time: 5
         caches:
           - node
           - sonar
