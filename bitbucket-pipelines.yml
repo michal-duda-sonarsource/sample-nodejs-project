@@ -1,27 +1,26 @@
-image: feeni/node-chrome:latest
+    # This is a sample build configuration for JavaScript.
+    # Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+    # Only use spaces to indent your .yml configuration.
+    # -----
+    # You can specify a custom docker image from Docker Hub as your build environment.
+    image: node:10.15.3
 
-clone:
-  depth: full              # SonarCloud scanner needs the full history to assign issues properly
-
-definitions:
-  caches:
-    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
-  steps:
-    - step: &build-test-sonarcloud
-        name: Build, test and analyze on SonarCloud
-        caches:
-          - node
-          - sonar
-        script:
-          - npm install --quiet
-          - npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessNoSandbox  
-          - pipe: sonarsource/sonarcloud-scan:1.2.0
-            variables:
-              SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: '-Dsonar.sources=src -Dsonar.tests=src -Dsonar.test.inclusions="**/testing/**,**/*.spec.ts" -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info'
-pipelines:
-  default:
-    - step: *build-test-sonarcloud
-  pull-requests:
-    '**':
-      - step: *build-test-sonarcloud
+    pipelines:
+      default:
+        - step:
+            name: Build, run tests, analyze on SonarQube
+            caches:
+              - node
+            script:
+              - npm install
+              - npm test
+              - pipe: sonarsource/sonarqube-scan:1.0.0
+        - step:
+            name: Check Quality Gate on SonarQube
+            script:
+              - pipe: sonarsource/sonarqube-quality-gate:1.0.0
+        - step:
+            name: Deploy to Production
+            deployment: "Production"
+            script:
+              - echo "Good to deploy!"
