@@ -18,6 +18,7 @@ definitions:
           - npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessNoSandbox  
           - pipe: sonarsource/sonarqube-scan:1.0.0
             variables:
+              SONAR_HOST_URL: https://michal.eu.ngrok.io/
               EXTRA_ARGS: '-Dsonar.sources=src -Dsonar.tests=src -Dsonar.test.inclusions="**/testing/**,**/*.spec.ts" -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info'
           - pipe: sonarsource/sonarqube-quality-gate:1.0.0
           - echo "finished!"
