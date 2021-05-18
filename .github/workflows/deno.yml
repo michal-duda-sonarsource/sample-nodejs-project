@@ -29,13 +29,14 @@ jobs:
         node-version: '14'
     - name: npm install, build and test
       run: |
+        cd newdir
         npm install --quiet
-        npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessNoSandbox 
-        
+        npm run test -- --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessNoSandbox
+
     - name: SonarQube Scan
       uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: https://michal.eu.ngrok.io/
 
-  
+
