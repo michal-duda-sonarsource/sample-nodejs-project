@@ -5,7 +5,7 @@
 /dist-ng
 /dist
 /tmp
-/src/aot
+/newdir/src/aot
 
 # dependencies
 /node_modules

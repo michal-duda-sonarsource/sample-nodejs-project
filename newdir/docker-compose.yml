@@ -5,7 +5,7 @@ services:
   dev:
     container_name: angular-io-example_dev
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     environment:
       NODE_ENV: development

@@ -16,7 +16,7 @@ WORKDIR $APP_HOME
 
 RUN npm install
 
-COPY . $APP_HOME/
+COPY .. $APP_HOME/
 
 EXPOSE $PORT
 

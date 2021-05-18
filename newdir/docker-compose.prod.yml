@@ -5,7 +5,7 @@ services:
   prod:
     container_name: angular-io-example_prod
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile-prod
     environment:
       NODE_ENV: production
